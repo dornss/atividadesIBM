@@ -1,0 +1,22 @@
+package banco_IBM;
+
+class Transferencia implements TransacaoBancaria {
+    private ContaBancaria origem;
+    private ContaBancaria destino;
+
+    public Transferencia(ContaBancaria origem, ContaBancaria destino) {
+        this.origem = origem;
+        this.destino = destino;
+    }
+
+    @Override
+    public void realizarTransacao(double valor) {
+        if (origem.getSaldo() >= valor) {
+            origem.sacar(valor);
+            destino.depositar(valor, destino);
+            System.out.printf("Transferência de %.2f realizada com sucesso.", valor);
+        } else {
+            System.out.println("Saldo insuficiente para realizar a transferência.");
+        }
+    }
+}

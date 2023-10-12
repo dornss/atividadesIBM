@@ -1,0 +1,43 @@
+package banco_IBM;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class Main {
+
+	public static void main(String[] args) {
+		
+		Cliente cliente1 = new Cliente("João Apolinário", "12525209401");
+		Cliente cliente2 = new Cliente("Verônica Pereira", "76442322311"); 
+        ContaBancaria conta1 = new ContaCorrente("12345", 1000.0, cliente1);
+        ContaBancaria conta2 = new ContaCorrente("67890", 1500.0, cliente2);
+        System.out.printf("Saldo da conta do cliente %s: %f", conta1.getTitular(), conta1.getSaldo());
+        System.out.printf("Saldo da conta do cliente %s: %f", conta2.getTitular(), conta2.getSaldo());
+        conta1.sacar(500);
+        conta2.sacar(1000);
+        
+        TransacaoBancaria transferencia = new Transferencia(conta1, conta2);
+        transferencia.realizarTransacao(500);
+
+        List<ContaBancaria> contas = new ArrayList<>();
+        contas.add(conta1);
+        contas.add(conta2);
+
+        List<String> contasComSaldoSuperiorA1000 = contas.stream()
+                .filter(conta -> conta.getSaldo() >= 1000)
+                .map(ContaBancaria::getNumeroConta)
+                .collect(Collectors.toList());
+        List<String> contasComSaldoInferiorA1000 = contas.stream()
+        		.filter(conta -> conta.getSaldo() < 1000)
+        		.map(ContaBancaria::getNumeroConta)
+        		.collect(Collectors.toList());
+
+        System.out.println("Contas com saldo superior a 1000: " + contasComSaldoSuperiorA1000);
+        System.out.println("Contas com saldo inferior a 1000: " + contasComSaldoInferiorA1000);
+
+        
+
+	}
+
+}

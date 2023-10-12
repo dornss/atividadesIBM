@@ -1,0 +1,39 @@
+package banco_IBM;
+
+public class ContaBancaria {
+	private String numeroDaConta;
+	private Double saldo;
+	private Cliente titular;
+	
+	
+	public ContaBancaria(String numeroDaConta, Double saldo, Cliente titular) {
+		this.numeroDaConta = numeroDaConta;
+		this.saldo = saldo;
+		this.titular = titular;
+	}
+	
+	public String getNumeroConta() {
+        return numeroDaConta;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void sacar(double valor) {
+        if (saldo < valor) {
+            System.out.println("Saldo insuficiente para realizar o saque.");
+        }
+        saldo -= valor;
+        System.out.println("Saque de " + valor + " realizado com sucesso. Novo saldo: " + saldo);
+    }
+
+	public void depositar(double valor, ContaBancaria destino) {
+		saldo -= valor;
+        destino.saldo += valor;
+        System.out.println("Transferência de " + valor + " para a conta " + destino.numeroConta +
+                " realizada com sucesso. Novo saldo: " + saldo);
+		
+	}
+}
+

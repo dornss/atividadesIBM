@@ -1,0 +1,47 @@
+import java.math.BigDecimal;
+
+public class ContaBancaria {
+    private String numeroDaConta;
+    private BigDecimal saldo;
+    private Cliente titular;
+
+    public ContaBancaria(String numeroDaConta, double saldo, Cliente titular) {
+        this.numeroDaConta = numeroDaConta;
+        this.saldo = BigDecimal.valueOf(saldo);
+        this.titular = titular;
+    }
+
+    public String getNumeroConta() {
+        return numeroDaConta;
+    }
+
+    public BigDecimal getSaldo() {
+        return saldo;
+    }
+
+    public Cliente getTitular() {
+        return titular;
+    }
+
+    public void sacar(double valor) {
+        BigDecimal valorParaSaque = BigDecimal.valueOf(valor);
+        if (saldo.compareTo(valorParaSaque) < 0) {
+            System.out.println("Saldo insuficiente para realizar o saque.");
+        } else {
+            saldo = saldo.subtract(valorParaSaque);
+            System.out.printf("Saque de %.2f realizado com sucesso. Novo saldo: %.2f\n", valor, saldo);
+        }
+    }
+
+    public void depositar(double valor, ContaBancaria destino) {
+        BigDecimal valorParaDeposito = BigDecimal.valueOf(valor);
+        if (saldo.compareTo(valorParaDeposito) < 0) {
+            System.out.println("Saldo insuficiente para realizar a transferência.");
+        } else {
+            saldo = saldo.subtract(valorParaDeposito);
+            destino.saldo = destino.saldo.add(valorParaDeposito);
+            System.out.println("Transferência de " + valor + " para a conta " + destino.numeroDaConta +
+                    " realizada com sucesso. Novo saldo: " + saldo);
+        }
+    }
+}
